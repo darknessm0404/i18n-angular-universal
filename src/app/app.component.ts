@@ -1,14 +1,15 @@
 import { Component, Directive, ElementRef, Renderer } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { Http } from '@angular/http';
+import { I18nService } from './i18n.service';
 
 // templateUrl example
 import { Home } from './home';
+import { About } from './about';
 //
 /////////////////////////
 // ** Example Directive
 // Notice we don't touch the Element directly
-
 @Directive({
   selector: '[x-large]'
 })
@@ -21,16 +22,6 @@ export class XLarge {
     // ^^
   }
 }
-
-/////////////////////////
-// ** Example Components
-@Component({
-  selector: 'about',
-  template: `
-    <div>This is the "About" page</div>
-  `
-})
-export class About { }
 
 /////////////////////////
 // ** MAIN APP COMPONENT **
@@ -60,6 +51,12 @@ export class About { }
     <a [routerLinkActive]="['active', 'router-link-active']" [routerLink]=" ['./home'] ">Home</a>
     <a [routerLinkActive]="['active', 'router-link-active']" [routerLink]=" ['./about'] ">About</a>
   </nav>
+  <nav>
+    <ul>
+      <li><button (click)="selectLanguage('en')">EN</button></li>
+      <li><button (click)="selectLanguage('fr')">FR</button></li>
+    </ul>
+  </nav>
   <div class="hero-universal">
     <div class="inner-hero">
       <div>
@@ -86,8 +83,11 @@ export class App {
   title: string = 'ftw';
   data = {};
   server: string;
+  i18nService: I18nService;
 
-  constructor(public http: Http) { }
+  constructor(public http: Http, i18nService: I18nService) {
+    this.i18nService = i18nService;
+  }
 
   ngOnInit() {
     // limit the use of setTimeouts
@@ -100,6 +100,10 @@ export class App {
       .subscribe(res => {
         this.data = res.json();
       });
+  }
+
+  selectLanguage(lang) {
+    this.i18nService.selectLanguage(lang);
   }
 
 }
