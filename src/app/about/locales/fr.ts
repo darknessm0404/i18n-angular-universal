@@ -3,6 +3,6 @@ const aboutContentFrench = {
   text: 'Ce le text en francais',
 };
 
-export function getFr() {
+export function getLocalizedContent() {
   return aboutContentFrench;
 }

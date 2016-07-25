@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 
 const languages: Array<string> = ['en', 'fr', 'pt'];
 
@@ -6,18 +6,21 @@ const languages: Array<string> = ['en', 'fr', 'pt'];
 export class I18nService {
   public languages: Array<string>;
   public selectedLanguage: string;
+  public onSelectedLanguage: EventEmitter<string>;
 
   constructor() {
     this.languages = languages;
     this.selectedLanguage = window.localStorage.getItem('language') || languages[0];
+    this.onSelectedLanguage = new EventEmitter<string>();
   }
 
-  getSelectedLanguage() {
-    return this.selectedLanguage;
+  static getSelectedLanguage() {
+    return window.localStorage.getItem('language') || languages[0];
   }
 
   selectLanguage(lang) {
-    this.selectedLanguage = lang
+    this.selectedLanguage = lang;
     window.localStorage.setItem('language', lang);
+    //this.onSelectedLanguage.emit();
   }
 }

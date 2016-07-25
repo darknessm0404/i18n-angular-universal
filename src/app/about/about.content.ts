@@ -1,10 +1,14 @@
 import {Injectable} from '@angular/core';
-import { getEn } from './locales/en';
-import { getFr } from './locales/fr';
+import { I18nService } from '../../app/i18n.service';
 
-const aboutContent: Object = {
-  en: getEn(),
-  fr: getFr()
+var lang = I18nService.getSelectedLanguage();
+var getLocalizedContent;
+
+if(lang === 'en') {
+  getLocalizedContent = require('./locales/en');
+}
+else {
+  getLocalizedContent = require('./locales/fr');
 }
 
 @Injectable()
@@ -12,10 +16,10 @@ export class AboutContent {
   public aboutContent: Object;
 
   constructor() {
-    this.aboutContent = aboutContent;
+    this.aboutContent = getLocalizedContent();
   }
 
-  getAboutContent(lang) {
-    return this.aboutContent[lang];
+  getAboutContent() {
+    return this.aboutContent;
   }
 }

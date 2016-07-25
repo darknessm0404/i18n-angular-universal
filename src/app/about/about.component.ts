@@ -12,7 +12,7 @@ export class About {
   public text: Object;
 
   constructor(aboutContent: AboutContent, i18nService: I18nService) {
-    let selectedLanguage = i18nService.getSelectedLanguage();
-    this.text = aboutContent.getAboutContent(selectedLanguage);
+    //let selectedLanguage = i18nService.getSelectedLanguage();
+    this.text = aboutContent.getAboutContent();
   }
 }
