@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { AboutContent } from './about.content';
-import { I18nService } from '../../app/i18n.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   moduleId: __filename,
@@ -9,10 +8,22 @@ import { I18nService } from '../../app/i18n.service';
   templateUrl: 'about.template.html'
 })
 export class About {
-  public text: Object;
+  public content: Object;
 
-  constructor(aboutContent: AboutContent, i18nService: I18nService) {
-    let selectedLanguage = i18nService.getSelectedLanguage();
-    this.text = aboutContent.getAboutContent(selectedLanguage);
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      let lang:string = params['lang'];
+
+      if(lang == 'en') {
+        this.content = require('./locales/en.json');
+      }
+      else if(lang == 'fr') {
+        this.content = require('./locales/fr.json');
+      }
+
+      console.log(this.content);
+    });
   }
 }

@@ -104,6 +104,7 @@ export class App {
 
   selectLanguage(lang) {
     this.i18nService.selectLanguage(lang);
+    window.location.reload();
   }
 
 }
